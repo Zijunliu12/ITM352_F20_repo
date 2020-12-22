@@ -23,6 +23,11 @@
 
     };
 
+    function ClearProducts(){
+        sessionStorage.clear();
+        window.location.reload();
+    };
+
 
 </script>
 
@@ -84,7 +89,7 @@
             <script>
                 for (item in Teas){
                     for (i=0; i<Teas[item].length; i++){
-                        Temp_qty = allProduct.getItem(`${item}[${i}]`);
+                        var Temp_qty = allProduct.getItem(`${item}[${i}]`);
                         if(Temp_qty>0){
                         document.write(`
                         <tr>
@@ -93,17 +98,40 @@
                             <td><input type="button" class="button alt" value="One More!" onclick="add('${item}',${i});"></td>
                             <td><input type="button" class="button alt" value="One Less!" onclick="subtract('${item}',${i});"></td>
                             <td>${(Teas[item][i].price)*(Temp_qty)}</td>
-
-
                         </tr>
+                        
                         `);
                     }
                     };
                 };
-            
+                if (allProduct.length>0){
+                    document.write(`
+                    <tr>
+                        <td style="text-align: center;" colspan="4" width="67%">Sub-total</td>
+                        <td width="33%">$</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan="4" width="67%"><span style="font-family: arial;">Tax @ 5.75%</span></td>
+                        <td width="54%">\$</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan="4" width="67%"><strong>Shipping</strong></td>
+                        <td width="54%"><strong>\$</strong></td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: center;" colspan="4" width="67%"><strong>Total</strong></td>
+                        <td width="54%"><strong>\$</strong></td>
+                     </tr>
+                    
+                    `);
+                }
             </script>
 
+
+
         </table>
+        <h5><button class="w3-btn w3-ripple w3-red w3-tag w3-wide w3-large" onclick="ClearProducts()">Clear All</button></h5>
+
     </div>
     
 </body>
