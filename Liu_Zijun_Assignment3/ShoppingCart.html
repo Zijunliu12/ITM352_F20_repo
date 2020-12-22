@@ -173,10 +173,17 @@
 
             </tr>
             <script>
+              var Temp_qty;
+              var cost_break_down;
+              var subtotal = 0;  
+
                 for (item in Teas){
                     for (i=0; i<Teas[item].length; i++){
-                        var Temp_qty = allProduct.getItem(`${item}[${i}]`);
-                        var 
+                        Temp_qty = allProduct.getItem(`${item}[${i}]`);
+                        cost_break_down = (Teas[item][i].price)*(Temp_qty);
+                        cost_break_down = cost_break_down.toFixed(2);
+                        cost_break_down = parseFloat(cost_break_down);
+                        subtotal += cost_break_down;
                         if(Temp_qty>0){
                         document.write(`
                         <tr>
@@ -184,30 +191,63 @@
                             <td>${Temp_qty}</td>
                             <td><input type="button" class="button alt" value="One More!" onclick="add('${item}',${i});"></td>
                             <td><input type="button" class="button alt" value="One Less!" onclick="subtract('${item}',${i});"></td>
-                            <td>${(Teas[item][i].price)*(Temp_qty)}</td>
+                            <td>$${cost_break_down}</td>
                         </tr>
                         
                         `);
                     }
                     };
                 };
+                //compute tax
+
+                  tax = subtotal * 0.0575;
+                  tax = tax.toFixed(2);
+                  tax = parseFloat(tax);
+
+                //Pre-shipping total
+                   pre_total = subtotal + tax;
+                   pre_total = pre_total.toFixed(2);
+                   pre_total = parseFloat(pre_total);
+
+                //compute shipping
+
+                    shipping = 0;
+    if(pre_total == 0){
+        shipping = 0;
+    }else if (pre_total<50){
+      shipping = 2;
+    }else if (pre_total<=100 && pre_total>=50){
+      shipping = 5;
+    }else{
+      shipping = pre_total * 0.05;
+      shipping = shipping.toFixed(2);
+      shipping = parseFloat(shipping);
+
+    }
+
+     //compute total
+
+    total = subtotal + tax + shipping;
+    total = total.toFixed(2);
+    total = parseFloat(total);
+
                 if (allProduct.length>0){
                     document.write(`
                     <tr>
                         <td style="text-align: center;" colspan="4" width="67%">Sub-total</td>
-                        <td width="33%">$</td>
+                        <td width="33%">$${subtotal}</td>
                     </tr>
                     <tr>
                         <td style="text-align: center;" colspan="4" width="67%"><span style="font-family: arial;">Tax @ 5.75%</span></td>
-                        <td width="54%">\$</td>
+                        <td width="54%">\$${tax}</td>
                     </tr>
                     <tr>
                         <td style="text-align: center;" colspan="4" width="67%"><strong>Shipping</strong></td>
-                        <td width="54%"><strong>\$</strong></td>
+                        <td width="54%"><strong>\$${shipping}</strong></td>
                      </tr>
                      <tr>
                         <td style="text-align: center;" colspan="4" width="67%"><strong>Total</strong></td>
-                        <td width="54%"><strong>\$</strong></td>
+                        <td width="54%"><strong>\$${total}</strong></td>
                      </tr>
                     
                     `);
