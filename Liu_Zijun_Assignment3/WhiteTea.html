@@ -1,0 +1,221 @@
+
+
+<script src="./product_data.js" type="text/javascript">//This piece of code is borrowed from Assignment 1 Module, author Kazman Rick. This loads the product array in product_data.js</script>
+
+<script>
+
+
+    if (document.cookie == ""){
+        document.cookie = 'Account=Guest';
+    };
+
+    function getname() {
+    temp = document.cookie;
+    User = temp.replace('Account=','');
+    return User;
+}
+    
+    </script>
+    
+    
+    <script>
+      //This functions purpose is to check user's input whether its a string, integer, negative integer, or zeros. This is to notify user to enter valid quantity for purchase.
+      //This piece of code is borrowed from Lab 13 Author KazmanRick and slightly modified
+        function isNonNegInt(stringToCheck, returnErrors = false) {
+        errors = []; // assume no errors at first
+        if(stringToCheck == "") stringToCheck = 0; //Blank inputs are treated as 0s
+        if (Number(stringToCheck) != stringToCheck) errors.push('<font color="red">Not a number!</font>'); // Check if string is a number value
+        if (stringToCheck < 0) errors.push('<font color="red">Negative value!</font>'); // Check if it is non-negative
+        if (parseInt(stringToCheck) != stringToCheck) errors.push('<font color="red">Not an integer!</font>'); // Check that it is an integer
+        if (stringToCheck == 0) errors.push('<font color="red">Don"t be shy! Buy Something</font>');//check for 0s
+        if (stringToCheck > 0) errors.push('We have stock');//check for stock
+        return returnErrors ? errors : (errors.length == 0);
+    }
+    
+    //This function reads what the user typed in the quantity boxes and initiates the function isNonNegInt. Code is borrowed from lab 13. Author KazmanRick
+    function checkQuantityTextbox(theTextbox) {
+    
+                errs = isNonNegInt(theTextbox.value, true);
+                document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
+            }
+    
+    </script>
+    
+
+<!DOCTYPE html>
+<html>
+<title>Kalm Tea</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--Refrence sheet, tells the code to use the styles within the Reference sheets. Both are from w3schools Templates and is borrowed. w3.css is borrowed and modified slightly  -->
+<link rel="stylesheet" href="./w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+      <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a href=/ class="w3-bar-item w3-button w3-padding-large">HOME</a>
+      <div class="w3-dropdown-hover w3-hide-small">
+        <span class="w3-padding-large w3-button" title="More">Products <i class="fa fa-caret-down"></i></span>     
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+          <a href=/GreenTea.html class="w3-bar-item w3-button w3-padding-large w3-hide-small">Green Tea</a>
+          <a href=/BlackTea.html class="w3-bar-item w3-button w3-padding-large w3-hide-small">Black Tea</a>
+          <a href=/OolongTea.html class="w3-bar-item w3-button w3-padding-large w3-hide-small">Oolong Tea</a>
+          <a href=/WhiteTea.html class="w3-bar-item w3-button w3-padding-large w3-hide-small">White Tea</a>
+        </div>
+      </div>
+      <script>document.write(`<span class="w3-bar-item w3-display-middle">Welcome:${getname()}</span>`);</script>
+      <button id="Guest1" onclick="document.getElementById('Register').style.display='block'" class="w3-bar-item w3-button w3-padding-large w3-right w3-hide w3-show">Register</button>
+      <button id="Guest" onclick="document.getElementById('Login').style.display='block'" class="w3-bar-item w3-button w3-padding-large w3-right w3-hide w3-show">Login</button>
+      <button id="logout" class="w3-bar-item w3-button w3-padding-large w3-right w3-hide" onclick="Logout()">Logout</a>
+    </div>
+</div>
+
+<script>
+    function Hide() {
+  var x = document.getElementById("Guest");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+
+  var x1 = document.getElementById("Guest1");
+  if (x1.className.indexOf("w3-show") == -1) {
+    x1.className += " w3-show";
+  } else { 
+    x1.className = x1.className.replace(" w3-show", "");
+  }
+
+  var x2 = document.getElementById("logout");
+  if (x2.className.indexOf("w3-show") == -1) {
+    x2.className += " w3-show";
+  } else { 
+    x2.className = x2.className.replace(" w3-show", "");
+  }
+}
+
+function Logout(){
+  document.cookie = 'Account=Guest';
+  location.reload();
+
+};
+
+if (document.cookie != 'Account=Guest'){
+    Hide();
+    };
+</script>
+
+<div id="Login" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom">
+      <div class="w3-container w3-black">
+        <span onclick="document.getElementById('Login').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+        <h1>Login</h1>
+      </div>
+      <div class="w3-container">
+        <p>Please login to your account to purchase our teas!</p>
+        
+          <body>
+            <form action="/Login" method="POST">
+            <input type="text" name="username" size="40" placeholder="enter username" ><br />
+            <input type="password" name="password" size="40" placeholder="enter password"><br />
+            <input type="submit" value="Submit">
+            </form>
+          </body>
+       
+      </div>
+    </div>
+</div>
+
+<div id="Register" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom">
+      <div class="w3-container w3-black">
+        <span onclick="document.getElementById('Register').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+        <h1>Register</h1>
+      </div>
+      <div class="w3-container">
+        <p>Register an account with us!</p>
+        
+          <body>
+            <form action="/process_register" method="POST">
+            <input type="text" name="username" size="40" placeholder="enter username" minlength="4" maxlength="10" required><br />
+            <input type="password" name="password" size="40" placeholder="enter password" minlength="6" required><br />
+            <input type="password" name="repeat_password" size="40" placeholder="enter password again"><br />
+            <input type="email" name="email" size="40" placeholder="enter email" required><br />
+            <input type="submit" value="Submit">
+            </form>
+          </body>
+       
+      </div>
+    </div>
+</div>
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-bottomleft w3-center w3-padding-large w3-hide-small">
+    <span class="w3-tag">Open from 9am to 6pm</span>
+  </div>
+  <div class="w3-display-middle w3-center">
+    <span class="w3-text-white" style="font-size:90px">Kalm<br>Tea</span>
+  </div>
+  <div class="w3-display-bottomright w3-center w3-padding-large">
+    <span class="w3-tag">1578 Saint street, Unit 302</span>
+  </div>
+</header>
+
+<!-- Add a background color and large text to the whole page -->
+<div class="w3-sand w3-grayscale w3-large">
+
+<!-- About Container -->
+<div class="w3-container ">
+
+    <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide w3-xlarge">White Tea</span></h5>
+
+</div>
+<div class="w3-container w3-center">
+  
+    <script>
+      //for loop that loops the number of products in products array and writes their name, price, image, and quantity textbox for each one
+        for(i = 0; i<White.length; i++){
+
+          
+        document.write(`
+        <section>
+        
+
+        <div class="w3-quarter">
+        <h2>${White[i].name} $${White[i].price}</h2>
+        <img src="./images/White/${White[i].image}">
+        <br>
+        <h5><label id="quantity${i}_label">Quantity</label></h5>
+        <input type="text" name="quantity${i}" onkeyup="checkQuantityTextbox(this);">
+
+        </div>
+
+        </section>
+        
+        `);
+
+      }
+    </script>
+  
+</div>
+
+
+
+
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-light-grey w3-padding-48 w3-large">
+  <p><a href=#  title="Return to the top of the page" target="_self" class="w3-hover-text-green">Back to the top</a></p>
+</footer>
+
+
+</body>
+</html>

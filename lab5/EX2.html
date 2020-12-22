@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Hello
+    <div id="Kids">
+        <script>
+
+            var X = 2;
+            var age = 20;
+            var NumberOfKids = "I would like to have " + X + " kids";
+
+            
+            document.getElementById("Kids").innerHTML = NumberOfKids;
+        </script>
+        
+        <script>
+
+            
+            NumberOfKids = "I would like to have " + X*age + " kids";
+            //Putting X*age within Number of kids, saves rewriting the orignal X=2 to store the new absurd value. So in consoles I can check what is x, and console will tell me 2, same thing for age
+            
+            document.getElementById("Kids").innerHTML = NumberOfKids;
+
+        </script>
+    
+
+
+    </div>
+    
+</body>
+</html>

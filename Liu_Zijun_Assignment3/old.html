@@ -1,0 +1,165 @@
+<script>
+/* 
+Author: ZIjun Liu
+Class: ITM 352
+Assignment 1: This is an E-store programmed to sell tea. It currently has...
+ * A product page function that displays the variety of products being sold
+ * Quantity boxes users can input amount of items they would like to purchase
+ * A function written to check for valid entries to the quantity boxes, notifying users if wrong inputs or if no inputs are made
+ * A server to host the website, within it, the product page/invoice page/ and data
+ * Ability for both invoice and product page to use a single file to load product information (array information)
+ * Ability to POST user input into the forms, allowing server to send the data to Invoice
+ * Server generate invoice, and calculate purchase to spit out a recipet of items bought from store
+
+Credits: Kazman Rick, Labs, Wods. w3school
+some code was borrowed, modified, and used for reference from ITM 352 Wods, Labs, and from Author Kazman Rick.
+*/
+
+document.cookie = 'Account=Guest';
+</script>
+
+
+<script>
+  //This functions purpose is to check user's input whether its a string, integer, negative integer, or zeros. This is to notify user to enter valid quantity for purchase.
+  //This piece of code is borrowed from Lab 13 Author KazmanRick and slightly modified
+    function isNonNegInt(stringToCheck, returnErrors = false) {
+    errors = []; // assume no errors at first
+    if(stringToCheck == "") stringToCheck = 0; //Blank inputs are treated as 0s
+    if (Number(stringToCheck) != stringToCheck) errors.push('<font color="red">Not a number!</font>'); // Check if string is a number value
+    if (stringToCheck < 0) errors.push('<font color="red">Negative value!</font>'); // Check if it is non-negative
+    if (parseInt(stringToCheck) != stringToCheck) errors.push('<font color="red">Not an integer!</font>'); // Check that it is an integer
+    if (stringToCheck == 0) errors.push('<font color="red">Don"t be shy! Buy Something</font>');//check for 0s
+    return returnErrors ? errors : (errors.length == 0);
+}
+
+//This function reads what the user typed in the quantity boxes and initiates the function isNonNegInt. Code is borrowed from lab 13. Author KazmanRick
+function checkQuantityTextbox(theTextbox) {
+
+            errs = isNonNegInt(theTextbox.value, true);
+            document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
+        }
+
+</script>
+
+<!DOCTYPE html>
+<html>
+<title>Kalm Tea Shop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--Refrence sheet, tells the code to use the styles within the Reference sheets. Both are from w3schools Templates and is borrowed. w3.css is borrowed and modified slightly  -->
+<link rel="stylesheet" href="./w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+<body>
+
+<div class="bgimg w3-display-container w3-text-white">
+  <div class="w3-display-Topmiddle w3-jumbo">
+    <p><b>Kalm Tea</b>
+    </p>
+  </div>
+
+  <div class="w3-display-middle w3-jumbo">
+  <p><script>
+    document.write('Look around! ');
+    </script></p>
+  </div>
+
+
+  <div class="w3-display-topleft w3-container w3-xlarge">
+    <button onclick="document.getElementById('Products').style.display='block'" class="w3-button w3-black">Products</button>
+  </div>
+  <div class="w3-display-topright w3-container w3-xlarge">
+    <button onclick="document.getElementById('Login').style.display='block'" class="w3-button w3-black">Login</button>
+    <button onclick="document.getElementById('Register').style.display='block'" class="w3-button w3-black">Register</button>
+  </div>
+</div>
+
+
+<!-- Code is borrowed from w3school, part of the template. This generates a Button that when clicked popups its respective function. -->
+
+<div id="Login" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+    <div class="w3-container w3-black">
+      <span onclick="document.getElementById('Login').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+      <h1>Login</h1>
+    </div>
+    <div class="w3-container">
+      <p>Please login to your account to purchase our teas!</p>
+      
+        <body>
+          <form action="/process_products" method="POST">
+          <input type="text" name="username" size="40" placeholder="enter username" ><br />
+          <input type="password" name="password" size="40" placeholder="enter password"><br />
+          <input type="submit" value="Submit">
+          </form>
+        </body>
+     
+    </div>
+  </div>
+</div>
+
+<div id="Register" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+    <div class="w3-container w3-black">
+      <span onclick="document.getElementById('Register').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+      <h1>Register</h1>
+    </div>
+    <div class="w3-container">
+      <p>Register an account with us!</p>
+      
+        <body>
+          <form action="/process_register" method="POST">
+          <input type="text" name="username" size="40" placeholder="enter username" minlength="4" maxlength="10" required><br />
+          <input type="password" name="password" size="40" placeholder="enter password" minlength="6" required><br />
+          <input type="password" name="repeat_password" size="40" placeholder="enter password again"><br />
+          <input type="email" name="email" size="40" placeholder="enter email" required><br />
+          <input type="submit" value="Submit">
+          </form>
+        </body>
+     
+    </div>
+  </div>
+</div>
+
+<div id="Products" class="w3-modal">
+  <div class="w3-modal-content w3-animate-zoom">
+    <div class="w3-container w3-black w3-display-container">
+      <span onclick="document.getElementById('Products').style.display='none'" class="w3-button w3-display-topright w3-large">X</span>
+      <h1>Products</h1>
+    </div>
+
+    <form name="Quantity_selection" action="/login" method="GET">
+
+      <div>
+          <main>
+            <script>
+              //for loop that loops the number of products in products array and writes their name, price, image, and quantity textbox for each one
+                for(i = 0; i<products.length; i++){
+        
+                document.write(`
+                <section>
+                <div class="w3-container w3-dark-grey	">
+                <h2>${products[i].name}-$${products[i].price}</h2>
+                </div>
+                <h5>
+                <label id="quantity${i}_label">Quantity</label>
+                </h5>
+                <img src="./images/${products[i].image}">
+                </section>
+                
+                `);
+                }
+
+            </script>
+          </main>
+      </div>
+      <footer>
+        <input type="submit" value="Shop!" name="buy">
+    </footer>
+    </form>
+  </div>
+</div>
+
+
+</body>
+</html>

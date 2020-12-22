@@ -1,0 +1,50 @@
+h1{
+    font-family: "Oswald", sans;
+}
+
+h2{
+    font-family: "Oswald", sans;
+}
+
+
+body{
+    font-family: "Open Sans", sans;
+    color: darkblue;
+    margin: 10px 50px 10px 50px ;
+    width: 950px;
+    background-color: ivory;
+}
+
+img{
+    float: left;
+}
+
+.IE{
+float: left;
+width: 300px;
+margin-right:10px ;
+padding: 1em;
+}
+
+.Chrome{
+margin-left:300px ;
+margin-right: 300px;
+padding: 1em;
+}
+
+.Firefox{
+float: right;
+width: 300px;
+margin-right:10px ;
+padding: 1em;
+}
+
+li{
+    display: inline;
+
+}
+
+#content a{
+    margin-left: 50px;
+    margin-right: 50px;
+}

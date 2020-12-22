@@ -1,0 +1,110 @@
+
+<script src="./product_data.js" type="text/javascript">//This piece of code is borrowed from Assignment 1 Module, author Kazman Rick. This loads the product array in product_data.js</script>
+<script>
+    var allProduct = sessionStorage;
+
+    function add(Product, amount) { 
+        Temp_add= parseInt(sessionStorage.getItem(`${Product}[${amount}]`)); 
+        Temp_add += 1; 
+        sessionStorage.setItem(`${Product}[${amount}]`, Temp_add); 
+        window.location.reload(); 
+    };
+
+    function subtract(Product, amount) { 
+        Temp_subtract= parseInt(sessionStorage.getItem(`${Product}[${amount}]`)); 
+        if (Temp_subtract > 0) { 
+            Temp_subtract -= 1; 
+            sessionStorage.setItem(`${Product}[${amount}]`, Temp_subtract);
+            if (sessionStorage.getItem(`${Product}[${amount}]`) == 0){
+            sessionStorage.removeItem(`${Product}[${amount}]`);
+        } 
+            window.location.reload(); 
+        }
+
+    };
+
+
+</script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        body {
+          background-image: url('./images/Cart.jpg');
+          min-height: 75%;
+          background-position: center;
+          background-size: cover;
+        }
+        </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoppingCart</title>
+    <!--Refrence sheet, tells the code to use the styles within the Reference sheets. Both are from w3schools Templates and is borrowed. w3.css is borrowed and modified slightly  -->
+    <link rel="stylesheet" href="./w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+</head>
+<body>
+    <!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+      <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a href=/ class="w3-bar-item w3-button w3-padding-large">HOME</a>
+      <script>document.write(`<a href=/ShoppingCart.html class="w3-bar-item w3-button w3-padding-large w3-right">ShoppingCart(${sessionStorage.length})</a>`);</script>
+      <div class="w3-dropdown-hover w3-hide-small">
+        <span class="w3-padding-large w3-button" title="More">Products <i class="fa fa-caret-down"></i></span>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+          <a href=/GreenTea.html class="w3-bar-item w3-button w3-padding-large">Green Tea</a>
+          <a href=/BlackTea.html class="w3-bar-item w3-button w3-padding-large">Black Tea</a>
+          <a href=/OolongTea.html class="w3-bar-item w3-button w3-padding-large">Oolong Tea</a>
+          <a href=/WhiteTea.html class="w3-bar-item w3-button w3-padding-large">White Tea</a>
+        </div>
+      </div>
+      <script>document.write(`<span class="w3-bar-item w3-display-middle">Welcome:${getname()}</span>`);</script>
+      <button id="Guest1" onclick="document.getElementById('Register').style.display='block'" class="w3-bar-item w3-button w3-padding-large w3-right w3-hide w3-show">Register</button>
+      <button id="Guest" onclick="document.getElementById('Login').style.display='block'" class="w3-bar-item w3-button w3-padding-large w3-right w3-hide w3-show">Login</button>
+      <button id="logout" class="w3-bar-item w3-button w3-padding-large w3-right w3-hide" onclick="Logout()">Logout</a>
+
+    </div>
+</div>
+
+    <div class="w3-container w3-margin-top">
+        <h5 class="w3-padding-32 w3-margin-top" ><span class="w3-tag w3-wide w3-xxlarge">ShoppingCart</span></h5>
+        <table border="2" class="w3-table w3-striped w3-hoverable">
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Add quantity</th>
+                <th>Subtract quantity</th>
+                <th>Cost Break Down</th>
+
+            </tr>
+            <script>
+                for (item in Teas){
+                    for (i=0; i<Teas[item].length; i++){
+                        Temp_qty = allProduct.getItem(`${item}[${i}]`);
+                        if(Temp_qty>0){
+                        document.write(`
+                        <tr>
+                            <td>${Teas[item][i].name}</td>
+                            <td>${Temp_qty}</td>
+                            <td><input type="button" class="button alt" value="One More!" onclick="add('${item}',${i});"></td>
+                            <td><input type="button" class="button alt" value="One Less!" onclick="subtract('${item}',${i});"></td>
+                            <td>${(Teas[item][i].price)*(Temp_qty)}</td>
+
+
+                        </tr>
+                        `);
+                    }
+                    };
+                };
+            
+            </script>
+
+        </table>
+    </div>
+    
+</body>
+</html>
