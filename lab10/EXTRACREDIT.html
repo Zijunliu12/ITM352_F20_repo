@@ -1,0 +1,39 @@
+<script>
+var tic_tac_toe = [
+    "o",
+    "x",
+    "o",
+    "x",
+    "o",
+    "x",
+    "x",
+    "o",
+    "x"
+]
+
+
+
+
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table style="border: 1px solid black;text-align: center;">
+        <tbody>
+          <script>
+            var i;
+            for (i=0; i<tic_tac_toe.length; i=i+3){
+          document.write(`  <tr style="border: 1px solid black;"><td style="border: 1px solid black;">${tic_tac_toe[i]}</td><td style="border: 1px solid black;">${tic_tac_toe[i+1]}</td></td><td style="border: 1px solid black;">${tic_tac_toe[i+2]}</td></tr>
+`)
+            }
+        </script>
+        </tbody></table>
+</body>
+</html>

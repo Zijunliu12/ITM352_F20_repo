@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Tells this page to use w3.css as stylesheet. The style sheet is borrowed from w3schools and slightly modified-->
+    <link rel="stylesheet" href="./w3.css">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Generate the table using styles -->
+
+    <table border="2" class="w3-table w3-striped w3-hoverable	" >
+        <tbody>
+          <tr>
+            <th style="text-align: center;" width="43%">Item</th>
+            <th style="text-align: center;" width="11%">quantity</th>
+            <th style="text-align: center;" width="13%">price</th>
+            <th style="text-align: center;" width="54%">extended price</th>
+
+          <!-- This calls the function to generate_invoice, which takes POST data and uses it to print out rows or product and calculates according to POST data-->
+          </tr>
+${generate_invoice()}
+          <tr>
+            <td colspan="4" width="100%">&nbsp;</td>
+          </tr>
+
+          <!-- Takes the data calculated from function in the server and prints it-->
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+            <td width="54%" >\$${subtotal}</td>
+          </tr>
+
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @ 5.75%</span></td>
+            <td width="54%">\$${tax}</td>
+          </tr>
+
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><strong>Shipping</strong></td>
+            <td width="54%"><strong>\$${shipping}</strong></td>
+          </tr>
+
+          <tr>
+            <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+            <td width="54%"><strong>\$${total}</strong></td>
+           </tr>
+
+
+        </tbody>
+      </table>
+      <br>
+      <b>OUR SHIPPING POLICY IS:A subtotal $0 - $49.99 will be $2 shipping A subtotal $50 - $99.99 will be $5 shipping Subtotals over $100 will be charged 5% of the subtotal amount
+      </b>
+</body>
+</html>

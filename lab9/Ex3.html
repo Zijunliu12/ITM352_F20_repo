@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span id="firstname">Zijun</span>, <span id="lastname">liu</span>, <span id="store"></span> <span id = "blank"></span>
+<br>
+<input type="button" value="Swap" 
+    onclick="
+    store.innerHTML = firstname.innerHTML;
+    firstname.innerHTML = lastname.innerHTML;
+    lastname.innerHTML = store.innerHTML;
+    store.innerHTML = blank.innerHTML ;
+    ">
+
+</body>
+
+<script>
+    /*I realized my code  could be minimized. I had the original idea to have store be a variable to store one of the names. 
+    I got the error undefined, but after watching your solution, I realized I made a mistake when setting lastname to = store.innerhtml when it should just be lastname = store*/
+</script>
+
+</html>
