@@ -112,36 +112,26 @@ app.post("/process_register", function (request, response) {
         user_data[user_name_from_form].name = user_name_from_form;
         user_data[user_name_from_form].password = POST['password'];
         user_data[user_name_from_form].email = POST['email'];
+        user_data[user_name_from_form].address = POST['address'];
 
-        data = JSON.stringify(user_data);
-        fs.writeFileSync(filename, data, "utf-8");
-
-        var contents = fs.readFileSync('./Logged_In_Display.view', 'utf8');
-        response.send(eval('`' + contents + '`')); // render template string
-        function write_products(){
+        function delay(){
+            return new Promise(Uname => {
+                setTimeout(()=> {
+                    Uname(user_name_from_form);
+                }, 2000);
+            });
             
-            write = '';
-            for(i = 0; i<products.length; i++){
-                      
-                write += `
-                <section>
-                    <div class="w3-container w3-dark-grey	">
-                    <h2>${products[i].name}-$${products[i].price}</h2></div>
-                    <h5><label id="quantity${i}_label">Quantity</label></h5>
-                    <input type="text" value=0 name="quantity${i}" onkeyup="checkQuantityTextbox(this);">
-                    <img src="./images/${products[i].image}">
-                </section>
-                
-                `;
-                }
-                return write;
-                
         }
-        //used to display logged in user
-        function Personalize(){
-            User = `<p>Logged in as ${user_name_from_form}</p>`;
-                return User;
-            }
+    
+        async function CookieGiver(){
+            response.cookie('Account', user_name_from_form);
+            const result = await delay();
+            console.log(result);
+    
+        }
+        
+        CookieGiver();
+        response.redirect('back');
 
         }else{
             response.send('Password did not match! Please go back and try again!');
@@ -259,43 +249,6 @@ function PersonalizeInvoice(){
 }
 });
 
-//Taken from lab 14 redirects simple log in form
-app.get("/login", function (request, response) {
-    // Give a simple login form
-    str = `
-    Log in to make your purchase!
-    <body>
-    <form action="/process_products" method="POST">
-    <input type="text" name="username" size="40" placeholder="enter username" ><br />
-    <input type="password" name="password" size="40" placeholder="enter password"><br />
-    <input type="submit" value="Submit">
-    </form>
-
-    New user? Register with us!
-    <form action="/register" method="GET">
-    <input type="submit" value="Register Page">
-    </form>
-  </body>
-    `;
-    response.send(str);
-});
-
-app.get("/register", function (request, response) {
-    // Give a simple register form
-    str = `
-    <body>
-    Register an Account with Kalm Tea!
-    <form action="/process_register" method="POST">
-    <input type="text" name="username" size="40" placeholder="enter username" minlength="4" maxlength="10" required><br />
-    <input type="password" name="password" size="40" placeholder="enter password" minlength="6" required><br />
-    <input type="password" name="repeat_password" size="40" placeholder="enter password again"><br />
-    <input type="email" name="email" size="40" placeholder="enter email" required><br />
-    <input type="submit" value="Submit">
-    </form>
-  </body>
-    `;
-    response.send(str);
-});
 
 //console log saying its hosting server on port 8080, This is useful to see if the server is hosted at the very end. Similar to Ping! and Pong! to know if it went through everything.
 app.listen(8080, () => console.log(`Store online on port 8080`));

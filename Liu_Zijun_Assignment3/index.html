@@ -68,6 +68,7 @@
     <div class="w3-bar w3-black w3-card">
       <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
       <a href=/ class="w3-bar-item w3-button w3-padding-large">HOME</a>
+      <script>document.write(`<a href=/ShoppingCart.html class="w3-bar-item w3-button w3-padding-large w3-right">ShoppingCart(${sessionStorage.length})</a>`);</script>
       <div class="w3-dropdown-hover w3-hide-small">
         <span class="w3-padding-large w3-button" title="More">Products <i class="fa fa-caret-down"></i></span>     
         <div class="w3-dropdown-content w3-bar-block w3-card-4">
@@ -110,6 +111,7 @@
 
 function Logout(){
   document.cookie = 'Account=Guest';
+  sessionStorage.clear();
   location.reload();
 
 };
@@ -155,6 +157,7 @@ if (document.cookie != 'Account=Guest'){
             <input type="password" name="password" size="40" placeholder="enter password" minlength="6" required><br />
             <input type="password" name="repeat_password" size="40" placeholder="enter password again"><br />
             <input type="email" name="email" size="40" placeholder="enter email" required><br />
+            <input type="Address" name="address" size="40" placeholder="enter mailing address" required><br />
             <input type="submit" value="Submit">
             </form>
           </body>

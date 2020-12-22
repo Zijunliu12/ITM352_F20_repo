@@ -3,6 +3,12 @@
 <script>
     var allProduct = sessionStorage;
 
+    function getname() {
+    temp = document.cookie;
+    User = temp.replace('Account=','');
+    return User;
+  }
+
     function add(Product, amount) { 
         Temp_add= parseInt(sessionStorage.getItem(`${Product}[${amount}]`)); 
         Temp_add += 1; 
@@ -74,6 +80,86 @@
 
     </div>
 </div>
+<script>
+    function Hide() {
+     var x = document.getElementById("Guest");
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        } else { 
+        x.className = x.className.replace(" w3-show", "");
+      }
+  
+      var x1 = document.getElementById("Guest1");
+      if (x1.className.indexOf("w3-show") == -1) {
+        x1.className += " w3-show";
+        } else { 
+        x1.className = x1.className.replace(" w3-show", "");
+      }
+  
+      var x2 = document.getElementById("logout");
+      if (x2.className.indexOf("w3-show") == -1) {
+       x2.className += " w3-show";
+        } else { 
+        x2.className = x2.className.replace(" w3-show", "");
+      }
+    } 
+  
+    function Logout(){
+      document.cookie = 'Account=Guest';
+      sessionStorage.clear();
+      location.reload();
+  
+    };
+  
+    if (document.cookie != 'Account=Guest'){
+      Hide();
+    };
+  
+  </script>
+  
+  <div id="Login" class="w3-modal">
+      <div class="w3-modal-content w3-animate-zoom">
+        <div class="w3-container w3-black">
+          <span onclick="document.getElementById('Login').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+          <h1>Login</h1>
+        </div>
+        <div class="w3-container">
+          <p>Please login to your account to purchase our teas!</p>
+          
+            <body>
+              <form action="/Login" method="POST">
+              <input type="text" name="username" size="40" placeholder="enter username" ><br />
+              <input type="password" name="password" size="40" placeholder="enter password"><br />
+              <input type="submit" value="Submit">
+              </form>
+            </body>
+         
+        </div>
+      </div>
+  </div>
+  
+  <div id="Register" class="w3-modal">
+      <div class="w3-modal-content w3-animate-zoom">
+        <div class="w3-container w3-black">
+          <span onclick="document.getElementById('Register').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+          <h1>Register</h1>
+        </div>
+        <div class="w3-container">
+          <p>Register an account with us!</p>
+          
+            <body>
+              <form action="/process_register" method="POST">
+              <input type="text" name="username" size="40" placeholder="enter username" minlength="4" maxlength="10" required><br />
+              <input type="password" name="password" size="40" placeholder="enter password" minlength="6" required><br />
+              <input type="password" name="repeat_password" size="40" placeholder="enter password again"><br />
+              <input type="email" name="email" size="40" placeholder="enter email" required><br />
+              <input type="submit" value="Submit">
+              </form>
+            </body>
+         
+        </div>
+      </div>
+  </div>
 
     <div class="w3-container w3-margin-top">
         <h5 class="w3-padding-32 w3-margin-top" ><span class="w3-tag w3-wide w3-xxlarge">ShoppingCart</span></h5>
@@ -90,6 +176,7 @@
                 for (item in Teas){
                     for (i=0; i<Teas[item].length; i++){
                         var Temp_qty = allProduct.getItem(`${item}[${i}]`);
+                        var 
                         if(Temp_qty>0){
                         document.write(`
                         <tr>

@@ -15,12 +15,16 @@
   }
 
   function AddToCart(i){
-    var TempStorage = form[`quantity${i}`].value ;
-    if(isNonNegInt(TempStorage) == true){
-      sessionStorage[`Green[${i}]`] = TempStorage;
-      alert("Added To Cart");
-      console.log(TempStorage);
-      window.location.reload();
+    if(getname() != "Guest"){
+      var TempStorage = form[`quantity${i}`].value ;
+      if(isNonNegInt(TempStorage) == true){
+        sessionStorage[`Black[${i}]`] = TempStorage;
+        alert("Added To Cart");
+        console.log(TempStorage);
+        window.location.reload();
+      }
+    }else{
+      alert("Please Log In Before Adding to Cart!");
     }
   };
 
@@ -114,6 +118,7 @@
 
   function Logout(){
     document.cookie = 'Account=Guest';
+    sessionStorage.clear();
     location.reload();
 
   };
